@@ -357,15 +357,17 @@
         }
 
         $.fn.typeahead.apply(self.$input, typeaheadjs).on('typeahead:selected', $.proxy(function (obj, datum, name) {
-          var index = 0;
-          typeaheadjs.some(function(dataset, _index) {
-            if (dataset.name === name) {
-              index = _index;
-              return true;
-            }
-            return false;
-          });
-
+          // var index = 0;
+          // typeaheadjs.some(function(dataset, _index) {
+          //   if (dataset.name === name) {
+          //     index = _index;
+          //     return true;
+          //   }
+          //   return false;
+          // });
+  
+          var index = typeaheadjs.indexOf($.grep(typeaheadjs, function (x) { return x && x.name === name; })[0]);
+  
           // @TODO Dep: https://github.com/corejavascript/typeahead.js/issues/89
           if (typeaheadjs[index].valueKey) {
             self.add(datum[typeaheadjs[index].valueKey]);
